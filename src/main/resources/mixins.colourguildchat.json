@@ -4,7 +4,6 @@
   "refmap": "mixin.colourguildchat.refmap.json",
   "verbose": true,
   "mixins": [
-    "MixinEntityPlayerSP",
-    "MixinC01PacketChatMessage"
+    "MixinEntityPlayerSP"
   ]
 }

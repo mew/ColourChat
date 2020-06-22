@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClients
 import org.apache.http.util.EntityUtils
+import zone.nora.colourchat.commands.{ChangeColourCommand, ColouriseCommand}
 import zone.nora.colourchat.util.{EventListener, UpdateNotifier, Variables}
 
 import scala.util.control.NonFatal
@@ -24,7 +25,8 @@ object ColourChat {
 
   @EventHandler
   def init(e: FMLInitializationEvent): Unit = {
-    ClientCommandHandler.instance.registerCommand(new Command)
+    ClientCommandHandler.instance.registerCommand(new ColouriseCommand)
+    ClientCommandHandler.instance.registerCommand(new ChangeColourCommand)
     MinecraftForge.EVENT_BUS.register(new EventListener)
   }
 

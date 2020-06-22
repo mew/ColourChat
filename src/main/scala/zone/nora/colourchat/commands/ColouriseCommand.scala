@@ -1,9 +1,12 @@
-package zone.nora.colourchat
+package zone.nora.colourchat.commands
 
 import net.minecraft.client.Minecraft
 import net.minecraft.command.{CommandBase, ICommandSender}
 
-class Command extends CommandBase {
+/**
+ * Not really necessary for stuff other than testing
+ */
+class ColouriseCommand extends CommandBase {
   override def getCommandName: String = "colourise"
 
   override def getCommandUsage(sender: ICommandSender): String = "/colourise [message]"

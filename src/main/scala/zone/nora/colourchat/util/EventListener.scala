@@ -16,9 +16,8 @@ class EventListener {
 
   @SubscribeEvent
   def onChatReceived(e: ClientChatReceivedEvent): Unit = if (e.`type`.toInt != 2) {
-    val msg = e.message.getUnformattedText
-    if (msg.startsWith("You are now in the "))
-      Variables.currentChannel =
-        if (msg.toLowerCase.contains("guild")) "guild" else "other"
+    val msg = e.message.getUnformattedText.toLowerCase
+    if (msg.startsWith("you are now in the "))
+      Variables.allowedChannel = msg.contains("guild") || msg.contains("party")
   }
 }

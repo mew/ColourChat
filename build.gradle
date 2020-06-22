@@ -96,8 +96,8 @@ jar {
     manifest.attributes(
             'MixinConfigs': 'mixins.colourguildchat.json',
             'TweakOrder': '0',
-            'TweakClass': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker',
-            'FMLCorePlugin': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
+            'TweakClass': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
+            //'FMLCorePlugin': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
     )
 }
 

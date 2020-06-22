@@ -1,5 +1,7 @@
 package zone.nora.colourchat.launch.tweaker;
 
+import net.minecraft.launchwrapper.ITweaker;
+import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
@@ -10,29 +12,19 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.CodeSource;
-import java.util.Map;
+import java.util.List;
 
 @IFMLLoadingPlugin.SortingIndex(1)
-public class ColourChatTweaker implements IFMLLoadingPlugin {
+public class ColourChatTweaker implements ITweaker {
     @Override
-    public String[] getASMTransformerClass() {
-        return new String[0];
+    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
     }
 
     @Override
-    public String getModContainerClass() {
-        return null;
-    }
-
-    @Override
-    public String getSetupClass() {
-        return null;
-    }
-
-    @Override
-    public void injectData(Map<String, Object> data) {
+    public void injectIntoClassLoader(LaunchClassLoader classLoader) {
+        System.out.println("Loaded ColourChatTweaker.");
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.commandaliaser.json");
+        Mixins.addConfiguration("mixins.colourguildchat.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
         MixinEnvironment.getDefaultEnvironment().setSide(MixinEnvironment.Side.CLIENT);
         CodeSource codeSource = getClass().getProtectionDomain().getCodeSource();
@@ -52,7 +44,12 @@ public class ColourChatTweaker implements IFMLLoadingPlugin {
     }
 
     @Override
-    public String getAccessTransformerClass() {
-        return null;
+    public String getLaunchTarget() {
+        return "net.minecraft.client.main.Main";
+    }
+
+    @Override
+    public String[] getLaunchArguments() {
+        return new String[0];
     }
 }
