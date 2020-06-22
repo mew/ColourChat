@@ -7,13 +7,19 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+        maven {
+            name = "sponge"
+            url = "https://repo.spongepowered.org/maven"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'scala'
+apply plugin: 'org.spongepowered.mixin'
 
 /*
 // for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
@@ -24,6 +30,8 @@ plugins {
 version = "1.0"
 group= "zone.nora" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ColourGuildChat"
+
+sourceCompatibility = targetCompatibility = 1.8
 
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
@@ -38,28 +46,26 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
+configurations {
+    provided
+    compile.extendsFrom(provided)
+}
+
+repositories {
+    maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+}
+
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
-    // except that these dependencies get remapped to your current MCP mappings
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
+    provided('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+        exclude module: 'guava'
+        exclude module: 'gson'
+        exclude module: 'commons-io'
+        exclude module: 'log4j-core'
+    }
 }
 
 processResources
@@ -80,4 +86,22 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+jar {
+    from configurations.provided.asFileTree.files.collect {
+        zipTree(it)
+    }
+
+    manifest.attributes(
+            'MixinConfigs': 'mixins.colourguildchat.json',
+            'TweakOrder': '0',
+            'TweakClass': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker',
+            'FMLCorePlugin': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
+    )
+}
+
+mixin {
+    defaultObfuscationEnv searge
+    add sourceSets.main, "mixins.colourguildchat.refmap.json"
 }
