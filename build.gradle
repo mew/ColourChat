@@ -29,7 +29,7 @@ plugins {
 */
 version = "1.0"
 group= "zone.nora" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ColourGuildChat"
+archivesBaseName = "ColourChat"
 
 sourceCompatibility = targetCompatibility = 1.8
 
@@ -94,7 +94,7 @@ jar {
     }
 
     manifest.attributes(
-            'MixinConfigs': 'mixins.colourguildchat.json',
+            'MixinConfigs': 'mixins.colourchat.json',
             'TweakOrder': '0',
             'TweakClass': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
             //'FMLCorePlugin': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
@@ -103,5 +103,5 @@ jar {
 
 mixin {
     defaultObfuscationEnv searge
-    add sourceSets.main, "mixins.colourguildchat.refmap.json"
+    add sourceSets.main, "mixins.colourchat.refmap.json"
 }

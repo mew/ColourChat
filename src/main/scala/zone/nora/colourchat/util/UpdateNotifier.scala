@@ -15,12 +15,12 @@ class UpdateNotifier(latestVersion: String) {
   def onLogin(e: EntityJoinWorldEvent): Unit = if (!mc.isSingleplayer && e.entity.isInstanceOf[EntityPlayer]) {
     if (e.entity.getName == mc.thePlayer.getName) {
       breakline()
-      put(s"An update is available for SimpleStats ($latestVersion)!")
+      put(s"An update is available for ColourChat ($latestVersion)!")
       put("You can Download it here:")
       Minecraft.getMinecraft.thePlayer.addChatMessage(
         ChatComponentBuilder.of("\u00a76>> \u00a79Click Here \u00a76<<")
           .setHoverEvent("\u00a79Click!")
-          .setClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/mew/SimpleStats/releases")
+          .setClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/mew/ColourChat/releases")
           .build()
       )
       breakline()

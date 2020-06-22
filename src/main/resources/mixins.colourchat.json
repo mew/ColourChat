@@ -1,7 +1,7 @@
 {
   "compatibilityLevel": "JAVA_8",
   "package": "zone.nora.colourchat.launch.mixins",
-  "refmap": "mixin.colourguildchat.refmap.json",
+  "refmap": "mixin.colourchat.refmap.json",
   "verbose": true,
   "mixins": [
     "MixinEntityPlayerSP"

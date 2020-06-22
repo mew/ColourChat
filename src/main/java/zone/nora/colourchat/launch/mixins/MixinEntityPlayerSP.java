@@ -25,7 +25,7 @@ public class MixinEntityPlayerSP {
         if (Variables.onHypixel) {
             if (Variables.allowedChannel) {
                 if (message.startsWith("/gc ") || message.startsWith("/gchat ")) message = message.split(" ", 2)[1];
-                else if (!message.startsWith("/")) message = "\u00a7" + Variables.colour + message.replace('&', '\u00a7');
+                if (!message.startsWith("/")) message = "\u00a7" + Variables.colour + message.replace('&', '\u00a7');
             }
             C01PacketChatMessage packet = new C01PacketChatMessage(message);
             if (message.length() > 100) {

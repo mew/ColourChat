@@ -24,7 +24,7 @@ public class ColourChatTweaker implements ITweaker {
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
         System.out.println("Loaded ColourChatTweaker.");
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.colourguildchat.json");
+        Mixins.addConfiguration("mixins.colourchat.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
         MixinEnvironment.getDefaultEnvironment().setSide(MixinEnvironment.Side.CLIENT);
         CodeSource codeSource = getClass().getProtectionDomain().getCodeSource();

@@ -19,9 +19,9 @@ import zone.nora.colourchat.util.{EventListener, UpdateNotifier, Variables}
 
 import scala.util.control.NonFatal
 
-@Mod(modid = "ColourGuildChat", name = "ColourGuildChat", version = ColourChat.VERSION, modLanguage = "scala")
+@Mod(modid = "ColourChat", name = "ColourChat", version = ColourChat.VERSION, modLanguage = "scala")
 object ColourChat {
-  final val VERSION = "1.0"
+  final val VERSION = "2.0"
 
   @EventHandler
   def init(e: FMLInitializationEvent): Unit = {
@@ -32,7 +32,7 @@ object ColourChat {
 
   @EventHandler
   def postInit(e: FMLPostInitializationEvent): Unit = {
-    val file = new File("config/ColourGuildChat.cfg")
+    val file = new File("config/ColourChat.cfg")
     if (!file.exists()) {
       if (!file.createNewFile()) throw new RuntimeException("Failed to create Config File")
       FileUtils.writeStringToFile(file, "f")
@@ -45,29 +45,28 @@ object ColourChat {
       val blacklist = getUrlContent("https://gist.githubusercontent.com/mew/6686a939151c8fb3be34a54392646189/raw")
       if (blacklist._2) {
         if (blacklist._1.contains(Minecraft.getMinecraft.getSession.getPlayerID.replace("-", ""))) {
-          throw new RuntimeException("You are blacklisted from using ColourGuildChat."); Minecraft.getMinecraft.shutdown()
+          throw new RuntimeException("You are blacklisted from using ColourChat."); Minecraft.getMinecraft.shutdown()
         }
       }
 
-      val updateData = getUrlContent("https://api.github.com/repos/mew/ColouredGuildChat/releases")
+      val updateData = getUrlContent("https://api.github.com/repos/mew/ColourChat/releases")
       if (updateData._2) {
         val latestVersion = new JsonParser().parse(updateData._1).getAsJsonArray.get(0).getAsJsonObject
         val tagName = latestVersion.get("tag_name").getAsString
         if (tagName != VERSION) MinecraftForge.EVENT_BUS.register(new UpdateNotifier(tagName))
       } else println("Failed to fetch update data.")
     } catch {
+      case e: RuntimeException => throw new RuntimeException(e.getMessage)
       case NonFatal(e) => e.printStackTrace()
     }
   }
 
-  private def getUrlContent(url: String): (String, Boolean) = {
-    try {
-      val client = HttpClients.createDefault()
-      val request = new HttpGet(new URI(url))
-      request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:19.0) Gecko/20100101 Firefox/19.0")
-      (EntityUtils.toString(client.execute(request).getEntity), true)
-    } catch {
-      case NonFatal(e) => e.printStackTrace(); ("", false)
-    }
+  private def getUrlContent(url: String): (String, Boolean) = try {
+    val client = HttpClients.createDefault()
+    val request = new HttpGet(new URI(url))
+    request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:19.0) Gecko/20100101 Firefox/19.0")
+    (EntityUtils.toString(client.execute(request).getEntity), true)
+  } catch {
+    case NonFatal(e) => e.printStackTrace(); ("", false)
   }
 }

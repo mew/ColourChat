@@ -1,7 +1,6 @@
 package zone.nora.colourchat.commands
 
 import java.io.File
-import java.util.regex.Pattern
 
 import net.minecraft.client.Minecraft
 import net.minecraft.command.{CommandBase, ICommandSender}
@@ -15,7 +14,7 @@ class ChangeColourCommand extends CommandBase {
   override def getCommandUsage(sender: ICommandSender): String = "/setcolour [colour char] (eg '/setcolour d' for pink)"
 
   override def processCommand(sender: ICommandSender, args: Array[String]): Unit = if (args.length == 1 && args(0).length == 1) {
-    val colour = if (args(0).contains(Pattern.compile("[a-f0-9]"))) args(0) else "f"
+    val colour = if ("""[a-f0-9]""".r.pattern.matcher(args(0)).matches) args(0) else "f"
     Variables.colour = colour.charAt(0)
     val file = new File("config/ColourGuildChat.cfg")
     FileUtils.writeStringToFile(file, colour)

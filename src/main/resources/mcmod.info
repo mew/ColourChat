@@ -1,11 +1,11 @@
 [
 {
-  "modid": "ColourGuildChat",
-  "name": "ColourGuildChat",
-  "description": "Exploits a bug on Hypixel to add colour to guild chat. :)",
+  "modid": "ColourChat",
+  "name": "ColourChat",
+  "description": "Exploits a bug on Hypixel to add colour to guild (and party) chat.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/mew/colouredguildchat",
+  "url": "https://github.com/mew/colourchat",
   "updateUrl": "",
   "authorList": ["Zunora"],
   "credits": "",
