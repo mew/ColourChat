@@ -16,7 +16,7 @@ class ChangeColourCommand extends CommandBase {
   override def processCommand(sender: ICommandSender, args: Array[String]): Unit = if (args.length == 1 && args(0).length == 1) {
     val colour = if ("""[a-f0-9]""".r.pattern.matcher(args(0)).matches) args(0) else "f"
     Variables.colour = colour.charAt(0)
-    val file = new File("config/ColourGuildChat.cfg")
+    val file = new File("config/ColourChat.cfg")
     FileUtils.writeStringToFile(file, colour)
     def codeToName(code: String): String = code match {
       case "0" => "Black"

@@ -3,7 +3,7 @@
   "modid": "ColourChat",
   "name": "ColourChat",
   "description": "Exploits a bug on Hypixel to add colour to guild (and party) chat.",
-  "version": "${version}",
+  "version": "1.0",
   "mcversion": "${mcversion}",
   "url": "https://github.com/mew/colourchat",
   "updateUrl": "",

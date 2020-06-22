@@ -21,7 +21,6 @@ public class MixinEntityPlayerSP {
      */
     @Overwrite
     public void sendChatMessage(String message) {
-        System.out.println("Sending message: " + message);
         if (Variables.onHypixel) {
             if (Variables.allowedChannel) {
                 if (message.startsWith("/gc ") || message.startsWith("/gchat ")) message = message.split(" ", 2)[1];
@@ -38,7 +37,6 @@ public class MixinEntityPlayerSP {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Sending message: " + packet.getMessage());
             this.sendQueue.addToSendQueue(packet);
         } else {
             this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
